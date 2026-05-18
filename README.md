@@ -1,11 +1,11 @@
 # Microservices Anti-Pattern Security Scanner
 
-Framework modulare di Static Code Analysis scritto in Python, progettato per rilevare anti-pattern architetturali e vulnerabilità di sicurezza in ecosistemi a microservizi basati su Java Spring, Docker e Kubernetes.
+Tool modulare di Static Code Analysis scritto in Python, progettato per rilevare anti-pattern architetturali e vulnerabilità di sicurezza in sistemi con architettura a microservizi basati su Java Spring, Docker e Kubernetes.
 
 Lo scanner analizza codice sorgente, file di configurazione e manifest infrastrutturali per individuare configurazioni insicure, cattive pratiche di autenticazione/autorizzazione e problemi di esposizione dei servizi.
 
 ## 🚀 Caratteristiche principali
-* Architettura modulare basata su plugin
+* Architettura modulare
 * Supporto per progetti Java Spring Boot
 * Analisi di Dockerfile e manifest Kubernetes
 * Supporto a scansione di directory locali e archivi .zip
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 ## 💻 Utilizzo
 
 Il tool può analizzare:
-* una directory locale contenente un progetto a microservizi
+* una directory locale 
 * un archivio .zip (estratto automaticamente)
 ### Scansione di una directory
 ```bash

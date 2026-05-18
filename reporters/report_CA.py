@@ -7,8 +7,8 @@ def write_CA_Report(report, scanResults):
     centralizedAuthLogic = scanResults.get('centralizedAuthLogic', {})
     if centralizedAuthLogic:
         report.write('Rilevata Autorizzazione Centralizzata:\n')
-        for path, issues in centralizedAuthLogic.items():
-            report.write(f'File: {path}\n')
+        for filePath, issues in centralizedAuthLogic.items():
+            report.write(f'File: {filePath}\n')
             for issue in issues:
                 report.write(f'{issue}\n')
         report.write('\n')

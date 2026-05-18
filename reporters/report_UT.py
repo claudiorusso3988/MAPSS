@@ -8,7 +8,7 @@ def write_UT_Report(report, scanResults):
     if javaIssues:
         report.write('Rilevate Vulnerabiità Nel Codice Java:\n')
         for filePath, issues in javaIssues.items():
-            report.write(f'File: {filepath}\n')
+            report.write(f'File: {filePath}\n')
             for issue in issues:
                 report.write(f'{issue}\n')
         report.write('\n')
@@ -17,7 +17,7 @@ def write_UT_Report(report, scanResults):
     if propertiesIssues:
         report.write('Sicurezza/Autenticazione Disabilitate Nel File Di Configurazione:\n')
         for filePath, issues in propertiesIssues.items():
-            report.write(f'File: {filepath}\n')
+            report.write(f'File: {filePath}\n')
             for issue in issues:
                 report.write(f'{issue}\n')
         report.write('\n')

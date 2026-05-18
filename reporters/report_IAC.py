@@ -8,7 +8,7 @@ def write_IAC_Report(report, scanResults):
     if javaIssues:
         report.write('Rilevati Endpoint Privi Di Controllo Degli Accessi:\n')
         for filePath, issues in javaIssues.items():
-            report.write(f'File: {filepath}\n')
+            report.write(f'File: {filePath}\n')
             for issue in issues:
                 report.write(f'{issue}\n')
         report.write('\n')

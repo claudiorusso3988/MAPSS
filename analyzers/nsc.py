@@ -17,6 +17,9 @@ def checkNSC(filePath):
       loweredContent = content.lower()
       if 'server-ssl-enabled=false' in loweredContent or 'server-ssl-enabled: false' in loweredContent:
         findings.add(f'SSL/TLS Esplicitamente Disabilitato')
+      if 'server.port' in loweredContent or re.search(r'port:\s*\d+', loweredContent):
+        if 'server.ssl' not in loweredContent and 'ssl.enabled' not in loweredContent:
+            findings.add(f'Mancanza Implicita Di Configurazione SSL/TLS')
 
   except Exception:
     pass
@@ -56,7 +59,7 @@ def scanProject_NSC(basePath):
         filePath = os.path.join(root, file)
 
         # HTTP IN CHIARO / TLS DISABILITATO
-        if file.endswith( ('.java', '.js', '.yml', '.yaml', '.properties', '.xml') ):
+        if file.endswith( ('.java', '.js', '.yml', '.yaml', '.properties', '.xml', '.sh', '.ts') ):
           issues = checkNSC(filePath)
           if len(issues) > 0:
             results['issuesNSC'][filePath] = issues

@@ -1,23 +1,28 @@
 import os
 import re
 
-def checkNDE(filePath):
+def checkJava_NDE(filePath):
 
     findings = set()
-    
-    regexPatterns = [
-        re.compile(r"insert\s+into.*password.*values\s*\(\s*['\"][^'\"]+['\"]", re.IGNORECASE),
-        re.compile(r"log\.(info|debug|trace|error)\(.*password.*=.*[+]", re.IGNORECASE)
-    ]
-    
+
     try:
         with open(filePath, 'r', encoding = 'utf-8') as file:
+
             content = file.read()
-            
-            for pattern in regexPatterns:
-                if re.search(pattern, content):
-                    findings.add(f"Rilevato Possibile Salvataggio/Logging Di Dati Sensibili In Chiaro")
-                    
+
+            if 'NoOpPasswordEncoder.getInstance()' in content:
+                findings.add('Rilevato Uso esplicito Di NoOpPasswordEncoder: Le Password Degli Utenti Vengono Gestite E Validate In Chiaro Anziché Cifrate')
+
+            if re.search(r'@Column\s*\([^)]*name\s*=\s*["\'](secret|password|passwd|card|pan|creditCard)["\'][^)]*\)', content, re.IGNORECASE):
+                if '@Convert' not in content and '@Encrypted' not in content:
+                    findings.add('Rilevato Campo Sensibile Mappato Sul Database Tramite Entity JPA Senza Meccanismi Di Cifratura Persistente')
+
+            if re.search(r'["\']http://[^"\']*(?:login|oauth/token|checkout|payment|accesskey)', content, re.IGNORECASE):
+                findings.add('Rilevato URL HTTP In Chiaro Nel Codice Java Diretto A Un Endpoint Sensibile')
+
+            if re.search(r'log\.(info|debug|trace|error)\(.*password.*=.*[+]', content, re.IGNORECASE):
+                findings.add(f'Rilevato Logging Di Informazioni Sensibili In Chiaro')
+
     except Exception:
         pass
 
@@ -34,9 +39,9 @@ def scanProject_NDE(basePath):
         for file in files:
             filePath = os.path.join(root, file)
 
-            if file.endswith(('.java', '.js', '.xml', '.properties', '.yml', '.yaml')):
+            if file.endswith('.java'):
                     
-                issues = checkNDE(filePath)
+                issues = checkJava_NDE(filePath)
                 if len(issues) > 0:
                     results['plainTextData'][filePath] = issues
 

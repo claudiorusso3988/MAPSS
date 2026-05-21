@@ -21,7 +21,7 @@ def checkRegex_HS(filePath):
                 for match in matches:
                     secretValue = match.group(1)
                     if secretValue.lower() not in falsePositives and not secretValue.startswith('$'):
-                        findings.add(f'Hardcoded Secret Alla Riga {lineNum}: {match.roup(0).strip()}')
+                        findings.add(f'Hardcoded Secret Alla Riga {lineNum}: {match.group(0).strip()}')
     except Exception:
         pass
 
@@ -76,7 +76,7 @@ def scanProject_HS(basePath):
             # Al Fine Di Evitare Di Confondere HS Con NDE
             if not file.endswith(('.sql', '.ddl')):
 
-                if file.endswith(('.java', '.properties', '.xml', '.env', '.yaml', '.yml')):
+                if file.endswith(('.java', '.properties', '.xml', '.env', '.yaml', '.yml', '.ts', '.sh')):
                     issues = checkRegex_HS(filePath)
                     if len(issues) > 0:
                         results['issuesHS'][filePath] = issues

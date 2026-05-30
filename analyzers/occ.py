@@ -1,5 +1,6 @@
 import os
 import re
+from utils import removeJavaComments
 
 def checkJavaOCC(filePath):
 
@@ -14,7 +15,9 @@ def checkJavaOCC(filePath):
 
     try:
         with open(filePath, 'r', encoding='utf-8') as file:
-            content = file.read()
+        
+            rawContent = file.read()
+            content = removeJavaComments(rawContent)
 
             for pattern in customPatterns:
                 matches = re.findall(pattern, content, re.IGNORECASE)
@@ -63,7 +66,9 @@ def checkCryptoLibraries(filePath):
 
     try:
         with open(filePath, 'r', encoding='utf-8') as file:
-            content = file.read().lower()
+        
+            rawContent = file.read().lower()
+            content = removeJavaComments(rawContent)
 
             for library, signatures in librariesToCheck.items():
                 for signature in signatures:

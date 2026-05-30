@@ -29,6 +29,7 @@ progetto_scanner/
 │   ├── mua.py
 │   ├── nde.py
 │   ├── nsc.py
+│   ├── occ.py
 │   ├── pam.py
 │   ├── uptm.py
 │   └── ut.py
@@ -41,6 +42,7 @@ progetto_scanner/
     ├── report_MUA.py
     ├── report_NDE.py
     ├── report_NSC.py
+    ├── report_OCC.py
     ├── report_PAM.py
     ├── report_UPTM.py
     └── report_UT.py
